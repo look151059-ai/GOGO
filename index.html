@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&#x7BC0;&#x594F;&#x7DF4;&#x7FD2;&#x677F;</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <div class="layout">
+      <div class="main-col">
+        <section class="board-section">
+          <div class="section-title">
+            <h2>&#x7BC0;&#x594F;&#x683C;</h2>
+            <button id="randomizeButton" type="button" class="ghost">&#x96A8;&#x6A5F;&#x751F;&#x6210;</button>
+          </div>
+          <div id="rhythmGrid" class="rhythm-grid" aria-label="16 &#x683C;&#x7BC0;&#x594F;&#x677F;"></div>
+        </section>
+
+        <section class="palette-section">
+          <div class="section-title">
+            <h2>&#x97F3;&#x7B26;&#x5716;&#x793A;</h2>
+            <p>&#x62D6;&#x66F3;&#x4E0B;&#x65B9;&#x5716;&#x793A;&#x5230;&#x4EFB;&#x4E00;&#x683C;&#x5B50;&#xFF0C;&#x5373;&#x53EF;&#x66F4;&#x63DB;&#x6846;&#x6846;&#x4E2D;&#x7684;&#x97F3;&#x7B26;&#x3002;</p>
+          </div>
+          <div id="palette" class="palette" aria-label="&#x53EF;&#x62D6;&#x66F3;&#x97F3;&#x7B26;&#x5716;&#x793A;"></div>
+        </section>
+      </div>
+
+      <aside class="side-col" aria-label="&#x64AD;&#x653E;&#x8207;&#x6536;&#x97F3;&#x9762;&#x677F;">
+        <div class="side-stack">
+          <section class="hero hero-compact">
+            <p class="eyebrow">Rhythm Board</p>
+            <h1>16 &#x683C;&#x7BC0;&#x594F;&#x7DF4;&#x7FD2;&#x677F;</h1>
+            <p class="hero-text">
+              &#x5169;&#x6392;&#x5171; 16 &#x500B;&#x6846;&#x6846;&#xFF0C;&#x6BCF;&#x683C;&#x90FD;&#x80FD;&#x653E;&#x5165;&#x4E0D;&#x540C;&#x7BC0;&#x594F;&#x3002;&#x5F9E;&#x4E0B;&#x65B9;&#x62D6;&#x66F3;&#x97F3;&#x7B26;&#x5230;&#x683C;&#x5B50;&#x88E1;&#xFF0C;&#x5373;&#x53EF;&#x5FEB;&#x901F;&#x7DE8;&#x6392;&#x7DF4;&#x7FD2;&#x5167;&#x5BB9;&#x3002;
+            </p>
+          </section>
+
+          <div class="transport transport-side">
+            <div class="tempo-panel">
+              <label for="tempoRange">&#x901F;&#x5EA6; <span id="tempoValue">96</span> BPM</label>
+              <input id="tempoRange" type="range" min="40" max="200" value="96">
+            </div>
+            <div class="button-row">
+              <button id="playButton" type="button">&#x958B;&#x59CB;&#x64AD;&#x653E;</button>
+              <button id="stopButton" type="button" class="secondary">&#x505C;&#x6B62;</button>
+            </div>
+            <div class="mic-row">
+              <button id="micButton" type="button" class="secondary">&#x555F;&#x7528;&#x9EA5;&#x514B;&#x98A8;</button>
+              <span id="micDot" class="mic-dot" aria-label="&#x6536;&#x97F3;&#x6307;&#x793A;"></span>
+              <span id="micText" class="mic-text">&#x672A;&#x555F;&#x7528;</span>
+            </div>
+            <div class="toggle-row" aria-label="&#x64AD;&#x653E;&#x8A2D;&#x5B9A;">
+              <label class="toggle">
+                <input id="loopToggle" type="checkbox">
+                <span class="toggle-ui" aria-hidden="true"></span>
+                <span class="toggle-text">&#x5FAA;&#x74B0;&#x64AD;&#x653E;</span>
+              </label>
+            </div>
+
+            <div class="score-panel" aria-label="&#x8A55;&#x5206;&#x9762;&#x677F;">
+              <div class="toggle-row">
+                <label class="toggle">
+                  <input id="scoreToggle" type="checkbox">
+                  <span class="toggle-ui" aria-hidden="true"></span>
+                  <span class="toggle-text">&#x8A55;&#x5206;&#x6A21;&#x5F0F;</span>
+                </label>
+              </div>
+              <p class="score-hint">&#x8A55;&#x5206;&#x6A21;&#x5F0F;&#x6703;&#x95DC;&#x9589;&#x5FAA;&#x74B0;&#xFF0C;&#x64AD;&#x5B8C;&#x4E00;&#x8F2A;&#x81EA;&#x52D5;&#x7D50;&#x7B97;&#x3002;</p>
+              <div class="score-stats" role="group" aria-label="&#x8A55;&#x5206;&#x7D71;&#x8A08;">
+                <div class="score-stat">
+                  <span class="score-label">&#x5206;&#x6578;</span>
+                  <span id="scoreValue" class="score-value">0</span>
+                </div>
+                <div class="score-stat">
+                  <span class="score-label">&#x9023;&#x64CA;</span>
+                  <span id="comboValue" class="score-value">0</span>
+                </div>
+                <div class="score-stat">
+                  <span class="score-label">&#x547D;&#x4E2D;&#x7387;</span>
+                  <span id="accuracyValue" class="score-value">0%</span>
+                </div>
+              </div>
+              <p id="judgeText" class="score-judge">&#8212;</p>
+            </div>
+
+            <p id="statusText" class="status">&#x5F85;&#x6A5F;&#x4E2D;&#xFF0C;&#x8ACB;&#x62D6;&#x66F3;&#x97F3;&#x7B26;&#x5230;&#x4E0A;&#x65B9;&#x6846;&#x6846;&#x3002;</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <template id="cellTemplate">
+    <button class="rhythm-cell" type="button">
+      <span class="cell-index"></span>
+      <span class="cell-note"></span>
+      <span class="cell-label"></span>
+    </button>
+  </template>
+
+  <template id="paletteItemTemplate">
+    <div class="palette-item" draggable="true">
+      <span class="palette-note"></span>
+      <span class="palette-label"></span>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
